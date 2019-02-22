@@ -1,0 +1,14 @@
+push float(1.0)
+push double(2.0)
+push int8(3)
+push int8(4)
+push int8(5)
+more
+less
+lastprint
+more
+
+less 
+print
+dump
+exit

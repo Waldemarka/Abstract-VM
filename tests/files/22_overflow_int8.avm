@@ -1,0 +1,9 @@
+; ----------------------
+; 22_overflow_int8.avm -
+; ----------------------
+
+push int8(2)
+push int8(100)
+mul
+;dump
+exit
