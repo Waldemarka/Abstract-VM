@@ -28,14 +28,13 @@ private:
 	eOperandType 	_type;
 	std::string		_str;
 	Operand();
-	std::string			find_result(
-		const std::string &one, const std::string &two, int max_precision, char sign) const;
-		std::string			find_result(
-		const std::string &one, const std::string &two,  double max_precision, char sign) const;
 
 public:
 	Operand(T value, eOperandType type);
 	~Operand();
+	Operand(Operand const &rhs);
+	IOperand &operator=(Operand const &rhs);
+
 	int getPrecision( void ) const;
 	eOperandType getType( void ) const;
 	IOperand const * operator+( IOperand const & rhs ) const;

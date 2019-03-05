@@ -19,6 +19,22 @@ Factory			_factory;
 template <class T> Operand<T>::Operand(){}
 template <class T> Operand<T>::~Operand(void){}
 
+template <class T> Operand<T>::Operand(Operand const &rhs)
+{
+	*this = rhs;
+}
+
+template <class T> IOperand & Operand<T>::operator = (Operand const &rhs)
+{ 
+	if (this != &rhs)
+	{
+		this->_value = rhs._value;
+		this->_type = rhs._type;
+		this->_str = rhs._str;
+	}
+	return *this;
+}
+
 template <class T> Operand<T>::Operand(T value, eOperandType type)
 {
 	_value = value;
@@ -107,7 +123,7 @@ template <class T> IOperand const *Operand<T>::operator*(IOperand const &rhs) co
 	// 	return (new Operand<int16_t>(_value * std::stoi(rhs.toString()), Int16));
 	// else return (new Operand<int8_t>(_value * std::stoi(rhs.toString()), Int8));
 	IOperand const * oper;
-	std::string str = std::to_string(std::stof(this->toString()) * std::stof(rhs.toString()));
+	std::string str = std::to_string(std::stod(this->toString()) * std::stod(rhs.toString()));
 	if (this->getPrecision() > rhs.getPrecision())
 		oper = _factory.createOperand(this->getType(), str);
 	else

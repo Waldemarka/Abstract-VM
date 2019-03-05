@@ -16,6 +16,11 @@
 Factory::Factory(){}
 Factory::~Factory(){}
 
+Factory::Factory(Factory const &rhs)
+{
+	*this = rhs;
+}
+
 IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const
 {
 	if (type == Int32) return (createInt32(value));
@@ -86,7 +91,8 @@ IOperand const * Factory::createInt16( std::string const & value ) const
 IOperand const * Factory::createFloat( std::string const & value ) const
 {
 	try{
-		int a = std::stof(value.c_str());
+		float a = std::stof(value.c_str());
+		//printf("%f\n", a);
 		if (a >= -FLT_MAX && a <= FLT_MAX)
 			return(new Operand<float>(a, static_cast<eOperandType>(Float)));
 		else
@@ -105,7 +111,7 @@ IOperand const * Factory::createFloat( std::string const & value ) const
 IOperand const * Factory::createDouble( std::string const & value ) const
 {
 	try{
-		int a = std::stod(value.c_str());
+		double a = std::stod(value.c_str());
 		if (a >= -DBL_MAX && a <= DBL_MAX)
 			return(new Operand<double>(a, static_cast<eOperandType>(Double)));
 		else

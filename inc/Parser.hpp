@@ -39,8 +39,10 @@ private:
 	Factory 							_factory;
 public:
 	Parser();
-	Parser(std::vector<Data> d);
 	~Parser();
+	Parser(Parser const &rhs);
+	Parser &operator=(Parser const &rhs);
+	Parser(std::vector<Data> d);
 	//void			command(std::vector<Data>::iterator	iter);
 	void			add();
 	void			pop();

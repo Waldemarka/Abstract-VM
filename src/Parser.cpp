@@ -16,6 +16,21 @@
 Parser::Parser(){}
 Parser::~Parser(){}
 
+Parser::Parser(Parser const &rhs){
+	*this = rhs;
+}
+
+Parser &Parser::operator=(Parser const &rhs){
+	if (this != &rhs)
+	{
+		this->iter = rhs.iter;
+		this->end = rhs.end;
+		this->data = rhs.data;
+		this->operand = rhs.operand;
+	}
+	return *this;
+}
+
 eOperandType	Parser::return_type(int type)
 {
 	if (type == 1)
@@ -103,8 +118,10 @@ void			Parser::mod()
 	if (size < 2) throw ParserException("mod imposible");
 	IOperand const * first = operand.at(size - 1);
 	IOperand const * second = operand.at(size - 2);
-	if (std::atof(first->toString().c_str()) == 0) throw ParserException("div to 0 imposible");
-	IOperand const * tmp = *second % *first;
+	// printf("%s\n", first->toString().c_str());
+	if (std::atof(first->toString().c_str()) == 0 ||
+		std::atof(second->toString().c_str()) == 0) throw ParserException("div to 0 imposible");
+	IOperand const * tmp = *first % *second;
 	if (!tmp) throw ParserException("overflow after mod");
 	delete operand.at(operand.size() - 1);
 	delete operand.at(operand.size() - 2);
@@ -135,6 +152,8 @@ void			Parser::push(std::vector<Data>::iterator	iter)
 void			Parser::assert(std::vector<Data>::iterator	iter)
 {
 	if (operand.size() == 0) ParserException("stack is empty:(");
+	// printf("first - : %f\n", std::atof(iter->value.c_str()));
+	// printf("second - : %f\n", std::atof(operand.at(operand.size() - 1)->toString().c_str()));
 	if (std::atof(iter->value.c_str()) != std::atof(operand.at(operand.size() - 1)->toString().c_str()))
 		throw ParserException("dont assert. Something bad in type or value");
 }
